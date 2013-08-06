@@ -18,10 +18,12 @@ yel.Print("HELLO STDOUT!!! CAN YOU SEE ME???")
 
 That's it!
 
-# It's spelled "colour"
+# FAQ
+
+> It's spelled "colour"
 
 NO!
 
-# You're canadian, spell it "colour"
+> You're canadian, spell it "colour"
 
 NO!
