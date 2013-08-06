@@ -60,4 +60,71 @@ func TestStylesImmutable(t *testing.T) {
 	}
 
 	fmt.Println("Want : " + want + ", not want : " + notWant + ", got : " + got)
+
+}
+
+var allPaints = []struct {
+	color string
+	p     Paint
+}{
+	{"Black", BlackPaint},
+	{"Blue", BluePaint},
+	{"Green", GreenPaint},
+	{"Cyan", CyanPaint},
+	{"Red", RedPaint},
+	{"Purple", PurplePaint},
+	{"Brown", BrownPaint},
+	{"LightGray", LightGrayPaint},
+	{"DarkGray", DarkGrayPaint},
+	{"LightBlue", LightBluePaint},
+	{"LightGreen", LightGreenPaint},
+	{"LightCyan", LightCyanPaint},
+	{"LightRed", LightRedPaint},
+	{"LightPurple", LightPurplePaint},
+	{"Yellow", YellowPaint},
+	{"White", WhitePaint},
+}
+
+type PaintPerm struct {
+	name string
+	fg   Paint
+	bg   Paint
+}
+
+func allPaintPermutation() []PaintPerm {
+	var perm []PaintPerm
+	var name string
+	for i, p := range allPaints {
+		for j, pp := range allPaints {
+			if i == j {
+				name = "double-" + p.color
+			} else {
+				name = p.color + " on " + pp.color
+			}
+			perm = append(perm, PaintPerm{
+				name: name,
+				fg:   p.p,
+				bg:   pp.p,
+			})
+		}
+	}
+	return perm
+}
+
+func TestAllPermutationsOfPaint(t *testing.T) {
+	for _, perm := range allPaintPermutation() {
+		style := NewStyle(perm.bg, perm.fg)
+
+		want := "" +
+			"\033[" + "4" + string(perm.bg[len(perm.bg)-1]) + "m" +
+			"\033[" + string(perm.fg) + "m" +
+			perm.name + "\033[0m"
+
+		got := style.Get(perm.name)
+
+		fmt.Printf("Look at %s all the colors %s!!!\n", want, got)
+		if got != want {
+			t.Errorf("Want %s, got %s.  From %#v to %#v", want, got, want, got)
+		}
+	}
 }

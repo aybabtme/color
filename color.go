@@ -14,6 +14,7 @@ const (
 type Paint string
 
 const (
+	nullPaint      Paint = `null`
 	BlackPaint     Paint = `0;30`
 	BluePaint      Paint = `0;34`
 	GreenPaint     Paint = `0;32`
@@ -85,87 +86,86 @@ func (s Style) WithForeground(color Paint) Style {
 }
 
 func computeColorCode(bg, fg Paint) string {
-	// The background code is the last color code prefixed by 4
-	bgColor := bg[len(bg)-1]
-	if bgColor == '0' {
+	if bg == nullPaint {
 		return pre + string(fg) + "m" + post
 	}
 
-	// The combined code is the background code with the foreground,
-	// separated by a semi-colon ';'
+	// The background code is the last color code prefixed by 4
+	bgColor := bg[len(bg)-1]
 	back := pre + "4" + string(bgColor) + "m" + post
+
 	front := pre + string(fg) + "m" + post
 	return back + front
 }
 
 // Red gives red text on a black background
 func Red() Style {
-	return NewStyle(BlackPaint, RedPaint)
+	return NewStyle(nullPaint, RedPaint)
 }
 
 // Blue gives blue text on a black background
 func Blue() Style {
-	return NewStyle(BlackPaint, BluePaint)
+	return NewStyle(nullPaint, BluePaint)
 }
 
 // Green gives green text on a black background
 func Green() Style {
-	return NewStyle(BlackPaint, GreenPaint)
+	return NewStyle(nullPaint, GreenPaint)
 }
 
 // Cyan gives cyan text on a black background
 func Cyan() Style {
-	return NewStyle(BlackPaint, CyanPaint)
+	return NewStyle(nullPaint, CyanPaint)
 }
 
 // Purple gives purple text on a black background
 func Purple() Style {
-	return NewStyle(BlackPaint, PurplePaint)
+	return NewStyle(nullPaint, PurplePaint)
 }
 
 // Brown gives brown text on a black background
 func Brown() Style {
-	return NewStyle(BlackPaint, BrownPaint)
+	return NewStyle(nullPaint, BrownPaint)
 }
 
 // LightGray gives light gray text on a black background
 func LightGray() Style {
-	return NewStyle(BlackPaint, LightGrayPaint)
+	return NewStyle(nullPaint, LightGrayPaint)
 }
 
 // DarkGray gives dark gray text on a black background
 func DarkGray() Style {
-	return NewStyle(BlackPaint, DarkGrayPaint)
+	return NewStyle(nullPaint, DarkGrayPaint)
 }
 
 // LightBlue gives light blue text on a black background
 func LightBlue() Style {
-	return NewStyle(BlackPaint, LightBluePaint)
+	return NewStyle(nullPaint, LightBluePaint)
 }
 
 // LightGreen gives light green text on a black background
 func LightGreen() Style {
-	return NewStyle(BlackPaint, LightGreenPaint)
+	return NewStyle(nullPaint, LightGreenPaint)
 }
 
 // LightCyan gives light cyan text on a black background
 func LightCyan() Style {
-	return NewStyle(BlackPaint, LightCyanPaint)
+	return NewStyle(nullPaint, LightCyanPaint)
 }
 
 // LightRed gives light red text on a black background
 func LightRed() Style {
-	return NewStyle(BlackPaint, LightRedPaint)
+	return NewStyle(nullPaint, LightRedPaint)
 }
 
 // LightPurple gives light purple text on a black background
 func LightPurple() Style {
-	return NewStyle(BlackPaint, LightPurplePaint)
+	return NewStyle(nullPaint, LightPurplePaint)
 }
 
 // Yellow gives light  text on a black background
 func Yellow() Style {
-	return NewStyle(BlackPaint, YellowPaint)
+	return NewStyle(nullPaint, YellowPaint)
 }
 
 // White gives light  text on a dark gray background
