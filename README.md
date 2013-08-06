@@ -2,7 +2,7 @@
 
 Colorize your terminal strings.
 
-![A coloured terminal](https://s3-us-west-2.amazonaws.com/aybabtme/color_demo.png "A fine terminal")
+# Usage
 
 ```go
 yel := color.Yellow()
@@ -17,6 +17,14 @@ yel.Print("HELLO STDOUT!!! CAN YOU SEE ME???")
 ```
 
 That's it!
+
+# Demo
+
+![A coloured terminal](https://s3-us-west-2.amazonaws.com/aybabtme/color_demo.png "A fine terminal")
+
+# Docs
+
+[GoDoc!](http://godoc.org/github.com/aybabtme/color) (↫ this is a link)
 
 # FAQ
 
