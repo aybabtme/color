@@ -5,9 +5,14 @@ import (
 	"testing"
 )
 
+func TestCanUseStyleAsFunc(t *testing.T) {
+	yel := Yellow()
+	fmt.Printf("This is %s\n", yel("yellow"))
+}
+
 var fgTT = []struct {
 	name      string
-	styleFunc func() Style
+	styleFunc func() Brush
 	fg        Paint
 }{
 	{"red", Red, RedPaint},
@@ -30,7 +35,7 @@ var fgTT = []struct {
 func TestAllForegroundStyles(t *testing.T) {
 	for _, test := range fgTT {
 		want := "\033[" + string(test.fg) + "m" + test.name + "\033[0m"
-		got := test.styleFunc().Get(test.name)
+		got := test.styleFunc()(test.name)
 
 		fmt.Println("Want : " + want + ", got : " + got)
 
@@ -41,10 +46,11 @@ func TestAllForegroundStyles(t *testing.T) {
 }
 
 func TestStylesImmutable(t *testing.T) {
-	yellow := Yellow()
+	yellow := NewStyle(BlackPaint, YellowPaint)
+	yel := yellow.Brush()
 
 	msg := "this message has yellow foreground"
-	want := yellow.Get(msg)
+	want := yel(msg)
 
 	yellowRedBg := yellow.WithBackground(RedPaint)
 	notWant := yellowRedBg.Get(msg)

@@ -14,7 +14,7 @@ const (
 type Paint string
 
 const (
-	nullPaint      Paint = `null`
+	nilPaint       Paint = `nil`
 	BlackPaint     Paint = `0;30`
 	BluePaint      Paint = `0;34`
 	GreenPaint     Paint = `0;32`
@@ -33,6 +33,9 @@ const (
 	YellowPaint      Paint = `1;33`
 	WhitePaint       Paint = `1;37`
 )
+
+// Brush is a function that let's you colorize strings directly.
+type Brush func(string) string
 
 // Style will give you colorized strings.  Styles are immutable.
 type Style struct {
@@ -53,7 +56,7 @@ func NewStyle(background, foreground Paint) Style {
 	}
 }
 
-// Get the string with this color style applied to it
+// Get the string with this color style applied to it.
 func (s Style) Get(text string) string {
 	return s.code + text + reset
 }
@@ -63,6 +66,14 @@ func (s Style) Print(text string) {
 	if _, err := os.Stdout.WriteString(s.Get(text)); err != nil {
 		panic(err)
 	}
+}
+
+// Brush is a function that can be used to color things directly, i.e:
+//
+//    red := NewStyle(BlackPaint, RedPaint).Brush()
+//    fmt.Printf("This is %s\n", red("red"))
+func (s Style) Brush() Brush {
+	return s.Get
 }
 
 // WithBackground copies the current style and return a new Style that
@@ -86,7 +97,7 @@ func (s Style) WithForeground(color Paint) Style {
 }
 
 func computeColorCode(bg, fg Paint) string {
-	if bg == nullPaint {
+	if bg == nilPaint {
 		return pre + string(fg) + "m" + post
 	}
 
@@ -99,81 +110,81 @@ func computeColorCode(bg, fg Paint) string {
 }
 
 // Red gives red text on a black background
-func Red() Style {
-	return NewStyle(nullPaint, RedPaint)
+func Red() Brush {
+	return NewStyle(nilPaint, RedPaint).Get
 }
 
 // Blue gives blue text on a black background
-func Blue() Style {
-	return NewStyle(nullPaint, BluePaint)
+func Blue() Brush {
+	return NewStyle(nilPaint, BluePaint).Get
 }
 
 // Green gives green text on a black background
-func Green() Style {
-	return NewStyle(nullPaint, GreenPaint)
+func Green() Brush {
+	return NewStyle(nilPaint, GreenPaint).Get
 }
 
 // Cyan gives cyan text on a black background
-func Cyan() Style {
-	return NewStyle(nullPaint, CyanPaint)
+func Cyan() Brush {
+	return NewStyle(nilPaint, CyanPaint).Get
 }
 
 // Purple gives purple text on a black background
-func Purple() Style {
-	return NewStyle(nullPaint, PurplePaint)
+func Purple() Brush {
+	return NewStyle(nilPaint, PurplePaint).Get
 }
 
 // Brown gives brown text on a black background
-func Brown() Style {
-	return NewStyle(nullPaint, BrownPaint)
+func Brown() Brush {
+	return NewStyle(nilPaint, BrownPaint).Get
 }
 
 // LightGray gives light gray text on a black background
-func LightGray() Style {
-	return NewStyle(nullPaint, LightGrayPaint)
+func LightGray() Brush {
+	return NewStyle(nilPaint, LightGrayPaint).Get
 }
 
 // DarkGray gives dark gray text on a black background
-func DarkGray() Style {
-	return NewStyle(nullPaint, DarkGrayPaint)
+func DarkGray() Brush {
+	return NewStyle(nilPaint, DarkGrayPaint).Get
 }
 
 // LightBlue gives light blue text on a black background
-func LightBlue() Style {
-	return NewStyle(nullPaint, LightBluePaint)
+func LightBlue() Brush {
+	return NewStyle(nilPaint, LightBluePaint).Get
 }
 
 // LightGreen gives light green text on a black background
-func LightGreen() Style {
-	return NewStyle(nullPaint, LightGreenPaint)
+func LightGreen() Brush {
+	return NewStyle(nilPaint, LightGreenPaint).Get
 }
 
 // LightCyan gives light cyan text on a black background
-func LightCyan() Style {
-	return NewStyle(nullPaint, LightCyanPaint)
+func LightCyan() Brush {
+	return NewStyle(nilPaint, LightCyanPaint).Get
 }
 
 // LightRed gives light red text on a black background
-func LightRed() Style {
-	return NewStyle(nullPaint, LightRedPaint)
+func LightRed() Brush {
+	return NewStyle(nilPaint, LightRedPaint).Get
 }
 
 // LightPurple gives light purple text on a black background
-func LightPurple() Style {
-	return NewStyle(nullPaint, LightPurplePaint)
+func LightPurple() Brush {
+	return NewStyle(nilPaint, LightPurplePaint).Get
 }
 
 // Yellow gives light  text on a black background
-func Yellow() Style {
-	return NewStyle(nullPaint, YellowPaint)
+func Yellow() Brush {
+	return NewStyle(nilPaint, YellowPaint).Get
 }
 
 // White gives light  text on a dark gray background
-func White() Style {
-	return NewStyle(DarkGrayPaint, WhitePaint)
+func White() Brush {
+	return NewStyle(DarkGrayPaint, WhitePaint).Get
 }
 
 // Black gives black text on a white background
-func Black() Style {
-	return NewStyle(WhitePaint, BlackPaint)
+func Black() Brush {
+	return NewStyle(WhitePaint, BlackPaint).Get
 }
