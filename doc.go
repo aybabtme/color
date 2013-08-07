@@ -1,9 +1,9 @@
 // Package color colorizes your terminal strings.
 //
-// Default Brush are available for your convenience.  You can invoke
-// them directly :
+// Default Brush are available in sub-package brush for your convenience.  You can invoke
+// them directly:
 //
-//		fmt.Printf("This is %s\n", color.Red("red"))
+//		fmt.Printf("This is %s\n", brush.Red("red"))
 //
 // ...or you can create new ones!
 //
@@ -26,11 +26,11 @@
 //
 // You can use it with all sorts of things :
 //
-//		sout := log.New(os.Stdout, "["+color.Green("OK").String()+"]\t", log.LstdFlags)
-//		serr := log.New(os.Stderr, "["+color.Red("OMG").String()+"]\t", log.LstdFlags)
+//		sout := log.New(os.Stdout, "["+brush.Green("OK").String()+"]\t", log.LstdFlags)
+//		serr := log.New(os.Stderr, "["+brush.Red("OMG").String()+"]\t", log.LstdFlags)
 //
-//		sout.Printf("Everything was going %s until...", color.Cyan("fine"))
-//		serr.Printf("%s killed %s !!!", color.Red("Locke"), color.Blue("Jacob"))
+//		sout.Printf("Everything was going %s until...", brush.Cyan("fine"))
+//		serr.Printf("%s killed %s !!!", brush.Red("Locke"), brush.Blue("Jacob"))
 //
 // That's it!
 package color

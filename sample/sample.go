@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/aybabtme/color"
+	"github.com/aybabtme/color/brush"
 	"log"
 	"os"
 )
@@ -10,7 +11,7 @@ import (
 func main() {
 	// Default Brush are available for your convenience.  You can invoke
 	// them directly
-	fmt.Printf("This is %s\n", color.Red("red"))
+	fmt.Printf("This is %s\n", brush.Red("red"))
 
 	// or you can create new ones!
 	weird := color.NewBrush(color.PurplePaint, color.CyanPaint)
@@ -28,10 +29,10 @@ func main() {
 	fmt.Printf("This is %s but not really\n", green("kind of green"))
 
 	// You can use it with all sorts of things
-	sout := log.New(os.Stdout, "["+color.Green("OK").String()+"]\t", log.LstdFlags)
-	serr := log.New(os.Stderr, "["+color.Red("OMG").String()+"]\t", log.LstdFlags)
+	sout := log.New(os.Stdout, "["+brush.Green("OK").String()+"]\t", log.LstdFlags)
+	serr := log.New(os.Stderr, "["+brush.Red("OMG").String()+"]\t", log.LstdFlags)
 
-	sout.Printf("Everything was going %s until...", color.Cyan("fine"))
-	serr.Printf("%s killed %s !!!", color.Red("Locke"), color.Blue("Jacob"))
+	sout.Printf("Everything was going %s until...", brush.Cyan("fine"))
+	serr.Printf("%s killed %s !!!", brush.Red("Locke"), brush.Blue("Jacob"))
 
 }

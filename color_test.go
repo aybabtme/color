@@ -30,7 +30,7 @@ func TestAllForegroundStyles(t *testing.T) {
 	for _, test := range fgTT {
 		want := "\033[" + string(test.fg) + "m" + test.name + "\033[0m"
 
-		got := NewBrush(nilPaint, test.fg)(test.name)
+		got := NewBrush("", test.fg)(test.name)
 
 		fmt.Println("Want : " + want + ", got : " + got)
 
@@ -128,25 +128,4 @@ func TestAllPermutationsOfPaint(t *testing.T) {
 			t.Errorf("Want %s, got %s.  From %#v to %#v", want, got, want, got)
 		}
 	}
-}
-
-func TestCanDoReadmeExample(t *testing.T) {
-	// Default Brush are available for your convenience.  You can invoke
-	// them directly
-	fmt.Printf("This is %s\n", Red("red"))
-
-	// or you can create new ones!
-	weird := NewBrush(PurplePaint, CyanPaint)
-	fmt.Printf("This color is %s\n", weird("weird"))
-
-	// Create a Style, which has convenience methods
-	redBg := NewStyle(RedPaint, YellowPaint)
-
-	// Style.WithForeground or WithBackground returns a new Style, with the applied
-	// Paint.  Styles are immutable so the original one is left unchanged
-	greenFg := redBg.WithForeground(GreenPaint)
-
-	// Style.Brush gives you a Brush that you can invoke directly to colorize strings.
-	green := greenFg.Brush()
-	fmt.Printf("This is %s\n", green("green"))
 }
