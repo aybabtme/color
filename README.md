@@ -10,18 +10,16 @@ Colorize your terminal strings.
 yel := color.Yellow()
 fmt.Printf("This is %s\n", yel("yellow"))
 
+// or you can create new ones!
+weird := color.NewBrush(color.PurplePaint, color.CyanPaint)
+fmt.Printf("This color is %s\n", weird("weird"))
+
 // Create a Style, which has convenience methods
-redBg := color.NewStyle(RedPaint, YellowPaint)
-
-// Style.Get colorizes a string
-fmt.Printf("This is %s\n", redBg.Get("yellow with red background"))
-
-// Style.Print colorizes a string and print it on os.StdOut
-redBg.Print("HELLO STDOUT!!!")
+redBg := color.NewStyle(color.RedPaint, color.YellowPaint)
 
 // Style.WithForeground or WithBackground returns a new Style, with the applied
 // Paint.  Styles are immutable so the original one is left unchanged
-greenFg := redBg.WithForeground(GreenPaint)
+greenFg := redBg.WithForeground(color.GreenPaint)
 
 // Style.Brush gives you a Brush that you can invoke directly to colorize strings.
 green := greenFg.Brush()

@@ -1,9 +1,5 @@
 package color
 
-import (
-	"os"
-)
-
 const (
 	pre   = "\033["
 	post  = ``
@@ -13,29 +9,37 @@ const (
 // Paint is a color to paint, either as a foreground or background paint
 type Paint string
 
+// Valid colors for ANSI terminals
 const (
-	nilPaint       Paint = `nil`
-	BlackPaint     Paint = `0;30`
-	BluePaint      Paint = `0;34`
-	GreenPaint     Paint = `0;32`
-	CyanPaint      Paint = `0;36`
-	RedPaint       Paint = `0;31`
-	PurplePaint    Paint = `0;35`
-	BrownPaint     Paint = `0;33`
-	LightGrayPaint Paint = `0;37`
+	BlackPaint      Paint = `0;30`
+	DarkRedPaint    Paint = `0;31`
+	DarkGreenPaint  Paint = `0;32`
+	DarkYellowPaint Paint = `0;33`
+	DarkBluePaint   Paint = `0;34`
+	DarkPurplePaint Paint = `0;35`
+	DarkCyanPaint   Paint = `0;36`
+	LightGrayPaint  Paint = `0;37`
 
-	DarkGrayPaint    Paint = `1;30`
-	LightBluePaint   Paint = `1;34`
-	LightGreenPaint  Paint = `1;32`
-	LightCyanPaint   Paint = `1;36`
-	LightRedPaint    Paint = `1;31`
-	LightPurplePaint Paint = `1;35`
-	YellowPaint      Paint = `1;33`
-	WhitePaint       Paint = `1;37`
+	DarkGrayPaint Paint = `1;30`
+	RedPaint      Paint = `1;31`
+	GreenPaint    Paint = `1;32`
+	YellowPaint   Paint = `1;33`
+	BluePaint     Paint = `1;34`
+	PurplePaint   Paint = `1;35`
+	CyanPaint     Paint = `1;36`
+	WhitePaint    Paint = `1;37`
+
+	nilPaint Paint = `nil`
 )
 
 // Brush is a function that let's you colorize strings directly.
 type Brush func(string) string
+
+// NewBrush gives you a brush that you can invoke directly to create colorized
+// strings
+func NewBrush(background, foreground Paint) Brush {
+	return NewStyle(background, foreground).Brush()
+}
 
 // Style will give you colorized strings.  Styles are immutable.
 type Style struct {
@@ -56,24 +60,14 @@ func NewStyle(background, foreground Paint) Style {
 	}
 }
 
-// Get the string with this color style applied to it.
-func (s Style) Get(text string) string {
-	return s.code + text + reset
-}
-
-// Print will write the current text to os.StdOut.
-func (s Style) Print(text string) {
-	if _, err := os.Stdout.WriteString(s.Get(text)); err != nil {
-		panic(err)
-	}
-}
-
 // Brush is a function that can be used to color things directly, i.e:
 //
 //    red := NewStyle(BlackPaint, RedPaint).Brush()
 //    fmt.Printf("This is %s\n", red("red"))
 func (s Style) Brush() Brush {
-	return s.Get
+	return func(text string) string {
+		return s.code + text + reset
+	}
 }
 
 // WithBackground copies the current style and return a new Style that
@@ -109,82 +103,56 @@ func computeColorCode(bg, fg Paint) string {
 	return back + front
 }
 
-// Red gives red text on a black background
-func Red() Brush {
-	return NewStyle(nilPaint, RedPaint).Get
-}
-
-// Blue gives blue text on a black background
-func Blue() Brush {
-	return NewStyle(nilPaint, BluePaint).Get
-}
-
-// Green gives green text on a black background
-func Green() Brush {
-	return NewStyle(nilPaint, GreenPaint).Get
-}
-
-// Cyan gives cyan text on a black background
-func Cyan() Brush {
-	return NewStyle(nilPaint, CyanPaint).Get
-}
-
-// Purple gives purple text on a black background
-func Purple() Brush {
-	return NewStyle(nilPaint, PurplePaint).Get
-}
-
-// Brown gives brown text on a black background
-func Brown() Brush {
-	return NewStyle(nilPaint, BrownPaint).Get
-}
-
-// LightGray gives light gray text on a black background
-func LightGray() Brush {
-	return NewStyle(nilPaint, LightGrayPaint).Get
-}
-
-// DarkGray gives dark gray text on a black background
-func DarkGray() Brush {
-	return NewStyle(nilPaint, DarkGrayPaint).Get
-}
-
-// LightBlue gives light blue text on a black background
-func LightBlue() Brush {
-	return NewStyle(nilPaint, LightBluePaint).Get
-}
-
-// LightGreen gives light green text on a black background
-func LightGreen() Brush {
-	return NewStyle(nilPaint, LightGreenPaint).Get
-}
-
-// LightCyan gives light cyan text on a black background
-func LightCyan() Brush {
-	return NewStyle(nilPaint, LightCyanPaint).Get
-}
-
-// LightRed gives light red text on a black background
-func LightRed() Brush {
-	return NewStyle(nilPaint, LightRedPaint).Get
-}
-
-// LightPurple gives light purple text on a black background
-func LightPurple() Brush {
-	return NewStyle(nilPaint, LightPurplePaint).Get
-}
-
-// Yellow gives light  text on a black background
-func Yellow() Brush {
-	return NewStyle(nilPaint, YellowPaint).Get
-}
-
-// White gives light  text on a dark gray background
-func White() Brush {
-	return NewStyle(DarkGrayPaint, WhitePaint).Get
-}
+// Monochrome
 
 // Black gives black text on a white background
-func Black() Brush {
-	return NewStyle(WhitePaint, BlackPaint).Get
-}
+func Black() Brush { return NewBrush(WhitePaint, BlackPaint) }
+
+// White gives white text on a dark gray background
+func White() Brush { return NewBrush(DarkGrayPaint, WhitePaint) }
+
+// LightGray gives light gray text on a black background
+func LightGray() Brush { return NewBrush(nilPaint, LightGrayPaint) }
+
+// Bright colors
+
+// Blue gives blue text on a black background
+func Blue() Brush { return NewBrush(nilPaint, BluePaint) }
+
+// Cyan gives cyan text on a black background
+func Cyan() Brush { return NewBrush(nilPaint, CyanPaint) }
+
+// Green gives green text on a black background
+func Green() Brush { return NewBrush(nilPaint, GreenPaint) }
+
+// Purple gives purple text on a black background
+func Purple() Brush { return NewBrush(nilPaint, PurplePaint) }
+
+// Red gives red text on a black background
+func Red() Brush { return NewBrush(nilPaint, RedPaint) }
+
+// Yellow gives yellow text on a black background
+func Yellow() Brush { return NewBrush(nilPaint, YellowPaint) }
+
+// Dark colors
+
+// DarkBlue gives dark blue text on a black background
+func DarkBlue() Brush { return NewBrush(nilPaint, DarkBluePaint) }
+
+// DarkCyan gives dark cyan text on a black background
+func DarkCyan() Brush { return NewBrush(nilPaint, DarkCyanPaint) }
+
+// DarkGray gives dark gray text on a black background
+func DarkGray() Brush { return NewBrush(nilPaint, DarkGrayPaint) }
+
+// DarkGreen gives dark green text on a black background
+func DarkGreen() Brush { return NewBrush(nilPaint, DarkGreenPaint) }
+
+// DarkPurple gives dark purple text on a black background
+func DarkPurple() Brush { return NewBrush(nilPaint, DarkPurplePaint) }
+
+// DarkRed gives dark red text on a black background
+func DarkRed() Brush { return NewBrush(nilPaint, DarkRedPaint) }
+
+// DarkYellow gives brown text on a black background
+func DarkYellow() Brush { return NewBrush(nilPaint, DarkYellowPaint) }

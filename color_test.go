@@ -5,11 +5,6 @@ import (
 	"testing"
 )
 
-func TestCanUseStyleAsFunc(t *testing.T) {
-	yel := Yellow()
-	fmt.Printf("This is %s\n", yel("yellow"))
-}
-
 var fgTT = []struct {
 	name      string
 	styleFunc func() Brush
@@ -20,14 +15,14 @@ var fgTT = []struct {
 	{"green", Green, GreenPaint},
 	{"cyan", Cyan, CyanPaint},
 	{"purple", Purple, PurplePaint},
-	{"brown", Brown, BrownPaint},
 	{"light Gray", LightGray, LightGrayPaint},
 	{"dark Gray", DarkGray, DarkGrayPaint},
-	{"light Blue", LightBlue, LightBluePaint},
-	{"light Green", LightGreen, LightGreenPaint},
-	{"light Cyan", LightCyan, LightCyanPaint},
-	{"light Red", LightRed, LightRedPaint},
-	{"light Purple", LightPurple, LightPurplePaint},
+	{"dark Blue", DarkBlue, DarkBluePaint},
+	{"dark Yellow", DarkYellow, DarkYellowPaint},
+	{"dark Green", DarkGreen, DarkGreenPaint},
+	{"dark Cyan", DarkCyan, DarkCyanPaint},
+	{"dark Red", DarkRed, DarkRedPaint},
+	{"dark Purple", DarkPurple, DarkPurplePaint},
 	{"yellow", Yellow, YellowPaint},
 	// white and black have different backgrounds
 }
@@ -52,10 +47,10 @@ func TestStylesImmutable(t *testing.T) {
 	msg := "this message has yellow foreground"
 	want := yel(msg)
 
-	yellowRedBg := yellow.WithBackground(RedPaint)
-	notWant := yellowRedBg.Get(msg)
+	yellowRedBg := yellow.WithBackground(RedPaint).Brush()
+	notWant := yellowRedBg(msg)
 
-	got := yellow.Get(msg)
+	got := yel(msg)
 
 	if got == notWant {
 		t.Errorf("Didn't want %#v but got it", notWant)
@@ -79,14 +74,14 @@ var allPaints = []struct {
 	{"Cyan", CyanPaint},
 	{"Red", RedPaint},
 	{"Purple", PurplePaint},
-	{"Brown", BrownPaint},
+	{"DarkYellow", DarkYellowPaint},
 	{"LightGray", LightGrayPaint},
 	{"DarkGray", DarkGrayPaint},
-	{"LightBlue", LightBluePaint},
-	{"LightGreen", LightGreenPaint},
-	{"LightCyan", LightCyanPaint},
-	{"LightRed", LightRedPaint},
-	{"LightPurple", LightPurplePaint},
+	{"DarkBlue", DarkBluePaint},
+	{"DarkGreen", DarkGreenPaint},
+	{"DarkCyan", DarkCyanPaint},
+	{"DarkRed", DarkRedPaint},
+	{"DarkPurple", DarkPurplePaint},
 	{"Yellow", YellowPaint},
 	{"White", WhitePaint},
 }
@@ -119,18 +114,40 @@ func allPaintPermutation() []PaintPerm {
 
 func TestAllPermutationsOfPaint(t *testing.T) {
 	for _, perm := range allPaintPermutation() {
-		style := NewStyle(perm.bg, perm.fg)
+		brush := NewBrush(perm.bg, perm.fg)
 
 		want := "" +
 			"\033[" + "4" + string(perm.bg[len(perm.bg)-1]) + "m" +
 			"\033[" + string(perm.fg) + "m" +
 			perm.name + "\033[0m"
 
-		got := style.Get(perm.name)
+		got := brush(perm.name)
 
 		fmt.Printf("Look at %s all the colors %s!!!\n", want, got)
 		if got != want {
 			t.Errorf("Want %s, got %s.  From %#v to %#v", want, got, want, got)
 		}
 	}
+}
+
+func TestCanDoReadmeExample(t *testing.T) {
+	// Default Brush are available for your convenience.  You can invoke
+	// them directly
+	yel := Yellow()
+	fmt.Printf("This is %s\n", yel("yellow"))
+
+	// or you can create new ones!
+	weird := NewBrush(PurplePaint, CyanPaint)
+	fmt.Printf("This color is %s\n", weird("weird"))
+
+	// Create a Style, which has convenience methods
+	redBg := NewStyle(RedPaint, YellowPaint)
+
+	// Style.WithForeground or WithBackground returns a new Style, with the applied
+	// Paint.  Styles are immutable so the original one is left unchanged
+	greenFg := redBg.WithForeground(GreenPaint)
+
+	// Style.Brush gives you a Brush that you can invoke directly to colorize strings.
+	green := greenFg.Brush()
+	fmt.Printf("This is %s\n", green("green"))
 }
