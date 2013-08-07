@@ -5,7 +5,7 @@
 //   str := "Hello Blue World"
 //   blueStr := brush.Blue(str)
 //
-//  ...or simply :
+// ...or simply :
 //
 //	 blueStr := brush.Blue("I'm Blue")
 //
