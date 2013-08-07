@@ -12,10 +12,6 @@ func main() {
 	// them directly
 	fmt.Printf("This is %s\n", color.Red("red"))
 
-	// or rename them and invoke them
-	yel := color.Yellow
-	fmt.Printf("This is %s\n", yel("yellow"))
-
 	// or you can create new ones!
 	weird := color.NewBrush(color.PurplePaint, color.CyanPaint)
 	fmt.Printf("This color is %s\n", weird("weird"))
@@ -32,9 +28,10 @@ func main() {
 	fmt.Printf("This is %s but not really\n", green("kind of green"))
 
 	// You can use it with all sorts of things
-	sout := log.New(os.Stdout, "["+color.Green("OK")+"]\t", log.LstdFlags)
-	serr := log.New(os.Stderr, "["+color.Red("OMG")+"]\t", log.LstdFlags)
+	sout := log.New(os.Stdout, "["+color.Green("OK").String()+"]\t", log.LstdFlags)
+	serr := log.New(os.Stderr, "["+color.Red("OMG").String()+"]\t", log.LstdFlags)
 
 	sout.Printf("Everything was going %s until...", color.Cyan("fine"))
 	serr.Printf("%s killed %s !!!", color.Red("Locke"), color.Blue("Jacob"))
+
 }

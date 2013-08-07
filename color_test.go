@@ -6,31 +6,31 @@ import (
 )
 
 var fgTT = []struct {
-	name  string
-	brush Brush
-	fg    Paint
+	name string
+	fg   Paint
 }{
-	{"red", Red, RedPaint},
-	{"blue", Blue, BluePaint},
-	{"green", Green, GreenPaint},
-	{"cyan", Cyan, CyanPaint},
-	{"purple", Purple, PurplePaint},
-	{"light Gray", LightGray, LightGrayPaint},
-	{"dark Gray", DarkGray, DarkGrayPaint},
-	{"dark Blue", DarkBlue, DarkBluePaint},
-	{"dark Yellow", DarkYellow, DarkYellowPaint},
-	{"dark Green", DarkGreen, DarkGreenPaint},
-	{"dark Cyan", DarkCyan, DarkCyanPaint},
-	{"dark Red", DarkRed, DarkRedPaint},
-	{"dark Purple", DarkPurple, DarkPurplePaint},
-	{"yellow", Yellow, YellowPaint},
+	{"red", RedPaint},
+	{"blue", BluePaint},
+	{"green", GreenPaint},
+	{"cyan", CyanPaint},
+	{"purple", PurplePaint},
+	{"light Gray", LightGrayPaint},
+	{"dark Gray", DarkGrayPaint},
+	{"dark Blue", DarkBluePaint},
+	{"dark Yellow", DarkYellowPaint},
+	{"dark Green", DarkGreenPaint},
+	{"dark Cyan", DarkCyanPaint},
+	{"dark Red", DarkRedPaint},
+	{"dark Purple", DarkPurplePaint},
+	{"yellow", YellowPaint},
 	// white and black have different backgrounds
 }
 
 func TestAllForegroundStyles(t *testing.T) {
 	for _, test := range fgTT {
 		want := "\033[" + string(test.fg) + "m" + test.name + "\033[0m"
-		got := test.brush(test.name)
+
+		got := NewBrush(nilPaint, test.fg)(test.name)
 
 		fmt.Println("Want : " + want + ", got : " + got)
 
@@ -134,10 +134,6 @@ func TestCanDoReadmeExample(t *testing.T) {
 	// Default Brush are available for your convenience.  You can invoke
 	// them directly
 	fmt.Printf("This is %s\n", Red("red"))
-
-	// or rename them and invoke them
-	yel := Yellow
-	fmt.Printf("This is %s\n", yel("yellow"))
 
 	// or you can create new ones!
 	weird := NewBrush(PurplePaint, CyanPaint)

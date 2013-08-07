@@ -41,63 +41,6 @@ func NewBrush(background, foreground Paint) Brush {
 	return NewStyle(background, foreground).Brush()
 }
 
-// Monochrome
-var (
-	// Black gives black text on a white background
-	Black = NewBrush(WhitePaint, BlackPaint)
-
-	// White gives white text on a dark gray background
-	White = NewBrush(DarkGrayPaint, WhitePaint)
-
-	// LightGray gives light gray text on a black background
-	LightGray = NewBrush(nilPaint, LightGrayPaint)
-)
-
-// Bright colors
-var (
-	// Blue gives blue text on a black background
-	Blue = NewBrush(nilPaint, BluePaint)
-
-	// Cyan gives cyan text on a black background
-	Cyan = NewBrush(nilPaint, CyanPaint)
-
-	// Green gives green text on a black background
-	Green = NewBrush(nilPaint, GreenPaint)
-
-	// Purple gives purple text on a black background
-	Purple = NewBrush(nilPaint, PurplePaint)
-
-	// Red gives red text on a black background
-	Red = NewBrush(nilPaint, RedPaint)
-
-	// Yellow gives yellow text on a black background
-	Yellow = NewBrush(nilPaint, YellowPaint)
-)
-
-// Dark colors
-var (
-	// DarkBlue gives dark blue text on a black background
-	DarkBlue = NewBrush(nilPaint, DarkBluePaint)
-
-	// DarkCyan gives dark cyan text on a black background
-	DarkCyan = NewBrush(nilPaint, DarkCyanPaint)
-
-	// DarkGray gives dark gray text on a black background
-	DarkGray = NewBrush(nilPaint, DarkGrayPaint)
-
-	// DarkGreen gives dark green text on a black background
-	DarkGreen = NewBrush(nilPaint, DarkGreenPaint)
-
-	// DarkPurple gives dark purple text on a black background
-	DarkPurple = NewBrush(nilPaint, DarkPurplePaint)
-
-	// DarkRed gives dark red text on a black background
-	DarkRed = NewBrush(nilPaint, DarkRedPaint)
-
-	// DarkYellow gives brown text on a black background
-	DarkYellow = NewBrush(nilPaint, DarkYellowPaint)
-)
-
 // Style will give you colorized strings.  Styles are immutable.
 type Style struct {
 	bg   Paint
@@ -159,3 +102,83 @@ func computeColorCode(bg, fg Paint) string {
 	front := pre + string(fg) + "m" + post
 	return back + front
 }
+
+// Black gives black text on a white background
+type Black string
+
+func (b Black) String() string { return NewBrush(WhitePaint, BlackPaint)(string(b)) }
+
+// White gives white text on a dark gray background
+type White string
+
+func (w White) String() string { return NewBrush(DarkGrayPaint, WhitePaint)(string(w)) }
+
+// LightGray gives light gray text on a black background
+type LightGray string
+
+func (l LightGray) String() string { return NewBrush(nilPaint, LightGrayPaint)(string(l)) }
+
+// Blue gives blue text on a black background
+type Blue string
+
+func (b Blue) String() string { return NewBrush(nilPaint, BluePaint)(string(b)) }
+
+// Cyan gives cyan text on a black background
+type Cyan string
+
+func (c Cyan) String() string { return NewBrush(nilPaint, CyanPaint)(string(c)) }
+
+// Green gives green text on a black background
+type Green string
+
+func (g Green) String() string { return NewBrush(nilPaint, GreenPaint)(string(g)) }
+
+// Purple gives purple text on a black background
+type Purple string
+
+func (p Purple) String() string { return NewBrush(nilPaint, PurplePaint)(string(p)) }
+
+// Red gives red text on a black background
+type Red string
+
+func (r Red) String() string { return NewBrush(nilPaint, RedPaint)(string(r)) }
+
+// Yellow gives yellow text on a black background
+type Yellow string
+
+func (y Yellow) String() string { return NewBrush(nilPaint, YellowPaint)(string(y)) }
+
+// DarkBlue gives dark blue text on a black background
+type DarkBlue string
+
+func (d DarkBlue) String() string { return NewBrush(nilPaint, DarkBluePaint)(string(d)) }
+
+// DarkCyan gives dark cyan text on a black background
+type DarkCyan string
+
+func (d DarkCyan) String() string { return NewBrush(nilPaint, DarkCyanPaint)(string(d)) }
+
+// DarkGray gives dark gray text on a black background
+type DarkGray string
+
+func (d DarkGray) String() string { return NewBrush(nilPaint, DarkGrayPaint)(string(d)) }
+
+// DarkGreen gives dark green text on a black background
+type DarkGreen string
+
+func (d DarkGreen) String() string { return NewBrush(nilPaint, DarkGreenPaint)(string(d)) }
+
+// DarkPurple gives dark purple text on a black background
+type DarkPurple string
+
+func (d DarkPurple) String() string { return NewBrush(nilPaint, DarkPurplePaint)(string(d)) }
+
+// DarkRed gives dark red text on a black background
+type DarkRed string
+
+func (d DarkRed) String() string { return NewBrush(nilPaint, DarkRedPaint)(string(d)) }
+
+// DarkYellow gives brown text on a black background
+type DarkYellow string
+
+func (d DarkYellow) String() string { return NewBrush(nilPaint, DarkYellowPaint)(string(d)) }
