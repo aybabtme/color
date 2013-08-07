@@ -6,9 +6,9 @@ import (
 )
 
 var fgTT = []struct {
-	name      string
-	styleFunc func() Brush
-	fg        Paint
+	name  string
+	brush Brush
+	fg    Paint
 }{
 	{"red", Red, RedPaint},
 	{"blue", Blue, BluePaint},
@@ -30,7 +30,7 @@ var fgTT = []struct {
 func TestAllForegroundStyles(t *testing.T) {
 	for _, test := range fgTT {
 		want := "\033[" + string(test.fg) + "m" + test.name + "\033[0m"
-		got := test.styleFunc()(test.name)
+		got := test.brush(test.name)
 
 		fmt.Println("Want : " + want + ", got : " + got)
 
@@ -133,7 +133,10 @@ func TestAllPermutationsOfPaint(t *testing.T) {
 func TestCanDoReadmeExample(t *testing.T) {
 	// Default Brush are available for your convenience.  You can invoke
 	// them directly
-	yel := Yellow()
+	fmt.Printf("This is %s\n", Red("red"))
+
+	// or rename them and invoke them
+	yel := Yellow
 	fmt.Printf("This is %s\n", yel("yellow"))
 
 	// or you can create new ones!
