@@ -2,29 +2,42 @@
 
 Colorize your terminal strings.
 
+```go
+fmt.Printf("I'm in a %s world!\n", brush.Blue("blue"))
+```
+
 # Usage
 
-```go
-// Default Brush are available for your convenience.  You can invoke
-// them directly
-fmt.Printf("This is %s\n", brush.Red("red"))
+Default `Brush` are available for your convenience.  You can invoke them directly
 
-// or you can create new ones!
+```go
+fmt.Printf("This is %s\n", brush.Red("red"))
+```
+
+... or you can create new ones!
+```go
 weird := color.NewBrush(color.PurplePaint, color.CyanPaint)
 fmt.Printf("This color is %s\n", weird("weird"))
+```
 
-// Create a Style, which has convenience methods
+Create a `Style`, which has some convenience methods :
+```go
 redBg := color.NewStyle(color.RedPaint, color.YellowPaint)
+```
 
-// Style.WithForeground or WithBackground returns a new Style, with the applied
-// Paint.  Styles are immutable so the original one is left unchanged
+`Style.WithForeground` or `WithBackground` returns a new `Style`, with the applied
+`Paint`.  Styles are immutable so the original one is left unchanged
+
+```go
 greenFg := redBg.WithForeground(color.GreenPaint)
 
 // Style.Brush gives you a Brush that you can invoke directly to colorize strings.
 green := greenFg.Brush()
 fmt.Printf("This is %s but not really\n", green("kind of green"))
+```
 
-// You can use it with all sorts of things
+You can use it with all sorts of things :
+```go
 sout := log.New(os.Stdout, "["+brush.Green("OK").String()+"]\t", log.LstdFlags)
 serr := log.New(os.Stderr, "["+brush.Red("OMG").String()+"]\t", log.LstdFlags)
 
