@@ -16,7 +16,7 @@ import (
 )
 
 // Black gives black text on a white background. Use it like this:
-// 		color.Black("I'm color Black")
+// 		brush.Black("I'm color Black")
 type Black string
 
 func (b Black) String() string {
@@ -24,7 +24,7 @@ func (b Black) String() string {
 }
 
 // White gives white text on a dark gray background. Use it like this:
-// 		color.White("I'm color White")
+// 		brush.White("I'm color White")
 type White string
 
 func (w White) String() string {
@@ -32,7 +32,7 @@ func (w White) String() string {
 }
 
 // LightGray gives light gray text on a black background. Use it like this:
-// 		color.LightGray("I'm color LightGray")
+// 		brush.LightGray("I'm color LightGray")
 type LightGray string
 
 func (l LightGray) String() string {
@@ -40,7 +40,7 @@ func (l LightGray) String() string {
 }
 
 // Blue gives blue text on a black background. Use it like this:
-// 		color.Blue("I'm color Blue")
+// 		brush.Blue("I'm color Blue")
 type Blue string
 
 func (b Blue) String() string {
@@ -48,7 +48,7 @@ func (b Blue) String() string {
 }
 
 // Cyan gives cyan text on a black background. Use it like this:
-// 		color.Cyan("I'm color Cyan")
+// 		brush.Cyan("I'm color Cyan")
 type Cyan string
 
 func (c Cyan) String() string {
@@ -56,7 +56,7 @@ func (c Cyan) String() string {
 }
 
 // Green gives green text on a black background. Use it like this:
-// 		color.Green("I'm color Green")
+// 		brush.Green("I'm color Green")
 type Green string
 
 func (g Green) String() string {
@@ -64,7 +64,7 @@ func (g Green) String() string {
 }
 
 // Purple gives purple text on a black background. Use it like this:
-// 		color.Purple("I'm color Purple")
+// 		brush.Purple("I'm color Purple")
 type Purple string
 
 func (p Purple) String() string {
@@ -72,7 +72,7 @@ func (p Purple) String() string {
 }
 
 // Red gives red text on a black background. Use it like this:
-// 		color.Red("I'm color Red")
+// 		brush.Red("I'm color Red")
 type Red string
 
 func (r Red) String() string {
@@ -80,7 +80,7 @@ func (r Red) String() string {
 }
 
 // Yellow gives yellow text on a black background. Use it like this:
-// 		color.Yellow("I'm color Yellow")
+// 		brush.Yellow("I'm color Yellow")
 type Yellow string
 
 func (y Yellow) String() string {
@@ -88,7 +88,7 @@ func (y Yellow) String() string {
 }
 
 // DarkBlue gives dark blue text on a black background. Use it like this:
-// 		color.DarkBlue("I'm color DarkBlue")
+// 		brush.DarkBlue("I'm color DarkBlue")
 type DarkBlue string
 
 func (d DarkBlue) String() string {
@@ -96,7 +96,7 @@ func (d DarkBlue) String() string {
 }
 
 // DarkCyan gives dark cyan text on a black background. Use it like this:
-// 		color.DarkCyan("I'm color DarkCyan")
+// 		brush.DarkCyan("I'm color DarkCyan")
 type DarkCyan string
 
 func (d DarkCyan) String() string {
@@ -104,7 +104,7 @@ func (d DarkCyan) String() string {
 }
 
 // DarkGray gives dark gray text on a black background. Use it like this:
-// 		color.DarkGray("I'm color DarkGray")
+// 		brush.DarkGray("I'm color DarkGray")
 type DarkGray string
 
 func (d DarkGray) String() string {
@@ -112,7 +112,7 @@ func (d DarkGray) String() string {
 }
 
 // DarkGreen gives dark green text on a black background. Use it like this:
-// 		color.DarkGreen("I'm color DarkGreen")
+// 		brush.DarkGreen("I'm color DarkGreen")
 type DarkGreen string
 
 func (d DarkGreen) String() string {
@@ -120,7 +120,7 @@ func (d DarkGreen) String() string {
 }
 
 // DarkPurple gives dark purple text on a black background. Use it like this:
-// 		color.DarkPurple("I'm color DarkPurple")
+// 		brush.DarkPurple("I'm color DarkPurple")
 type DarkPurple string
 
 func (d DarkPurple) String() string {
@@ -128,7 +128,7 @@ func (d DarkPurple) String() string {
 }
 
 // DarkRed gives dark red text on a black background. Use it like this:
-// 		color.DarkRed("I'm color DarkRed")
+// 		brush.DarkRed("I'm color DarkRed")
 type DarkRed string
 
 func (d DarkRed) String() string {
@@ -136,7 +136,7 @@ func (d DarkRed) String() string {
 }
 
 // DarkYellow gives brown text on a black background. Use it like this:
-// 		color.DarkYellow("I'm color DarkYellow")
+// 		brush.DarkYellow("I'm color DarkYellow")
 type DarkYellow string
 
 func (d DarkYellow) String() string {
