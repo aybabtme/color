@@ -57,6 +57,10 @@ That's it!
 
 # FAQ
 
+> Does it work on Windows?
+
+NO!
+
 > It's spelled "colour"
 
 NO!
