@@ -1,3 +1,5 @@
+This library is boring, use [`rgbterm`](https://github.com/aybabtme/rgbterm)
+
 # Package `color`
 
 Colorize your terminal strings.
